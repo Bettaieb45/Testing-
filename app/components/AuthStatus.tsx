@@ -1,20 +1,19 @@
-"use client";
-
-import { useSession } from 'next-auth/react';
+"use client"
+import { signOut } from 'next-auth/react';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { getServerSession } from 'next-auth/next';
 
-export default function AuthStatus() {
-    const { data: session } = useSession();
-    const router = useRouter();
-
-
-
+export default  function AuthStatus({session }) {
+    const handleSignOut = async () => {
+        await signOut({ redirect: false });
+        window.location.href = '/'; // Redirect to home page to refresh session state
+    };
     if (session) {
         return (
             <div>
-                <p>Welcome, {session.user?.name}</p>
-                <Link href="/auth/signout">Sign Out</Link>;
+                <p>Welcome, {session.user.name}</p>
+                <Link onClick={handleSignOut} href="/auth/signout">Sign Out</Link>
             </div>
         );
     } else {

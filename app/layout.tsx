@@ -1,8 +1,11 @@
 import { ReactNode } from 'react';
 import Providers from './providers';
-import AuthStatus from './components/AuthStatus';
+import NavBar from './components/NavBar';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]/route';
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <head>
@@ -10,14 +13,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <Providers>
-          <header>
-            <nav>
-              <a href="/">Home</a>
-              <a href="/about">About</a>
-              <a href="/dashboard">Dashboard</a>
-              <AuthStatus />
-            </nav>
-          </header>
+          <NavBar session={session} />
           <main>{children}</main>
           <footer>Footer content</footer>
         </Providers>

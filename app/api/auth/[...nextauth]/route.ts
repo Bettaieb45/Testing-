@@ -21,20 +21,16 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log('signIn callback:', { user, account, profile, email, credentials });
       return true;
     },
     async redirect({ url, baseUrl }) {
-      console.log('redirect callback:', { url, baseUrl });
       return baseUrl;
     },
     async session({ session, token, user }) {
-      console.log('session callback:', { session, token, user });
       session.user = token.user;
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      console.log('jwt callback:', { token, user, account, profile, isNewUser });
       if (user) {
         token.user = user;
       }
