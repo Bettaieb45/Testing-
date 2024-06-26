@@ -12,33 +12,13 @@ export const authOptions = {
     }),
   ],
   adapter: MongoDBAdapter(clientPromise),
-  pages: {
-    signIn: '/auth/signin',
-    error: '/auth/error',
-  },
-  session: {
-    strategy: 'jwt',
-  },
+
+ 
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      return true;
-    },
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
-    async session({ session, token, user }) {
-      session.user = token.user;
-      return session;
-    },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      if (user) {
-        token.user = user;
-      }
-      return token;
-    },
   },
 };
-
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };

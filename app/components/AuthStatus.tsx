@@ -1,14 +1,12 @@
 "use client"
 import { signOut } from 'next-auth/react';
-import { authOptions } from '../api/auth/[...nextauth]/route';
 import Link from 'next/link';
-import { getServerSession } from 'next-auth/next';
 
 export default  function AuthStatus({session }) {
     const handleSignOut = async () => {
-        await signOut({ redirect: false });
-        window.location.href = '/'; // Redirect to home page to refresh session state
+        await signOut({ redirect: true });
     };
+   
     if (session) {
         return (
             <div>
@@ -17,6 +15,6 @@ export default  function AuthStatus({session }) {
             </div>
         );
     } else {
-        return <Link href="/auth/signin">Sign in</Link>;
+        return <Link  href="/auth/signin">Sign in</Link>;
     }
 }

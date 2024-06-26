@@ -1,34 +1,17 @@
 "use client";
 
-import { getProviders, signIn } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { signIn } from 'next-auth/react';
 
 export default function SignInPage() {
-    const [providers, setProviders] = useState<any>(null);
-
     useEffect(() => {
-        const fetchProviders = async () => {
-            const res = await getProviders();
-            setProviders(res);
-        };
-
-        fetchProviders();
+        // Redirect to Auth0 sign in
+        signIn('auth0');
     }, []);
 
     return (
         <div>
-            <h1>Sign In</h1>
-            {providers ? (
-                Object.values(providers).map((provider) => (
-                    <div key={provider.name}>
-                        <button onClick={() => signIn(provider.id)}>
-                            Sign in with {provider.name}
-                        </button>
-                    </div>
-                ))
-            ) : (
-                <p>Loading...</p>
-            )}
+            <h1>Redirecting to sign in...</h1>
         </div>
     );
 }
